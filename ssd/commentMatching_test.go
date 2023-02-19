@@ -3,7 +3,8 @@ package ssd
 import "testing"
 
 var ssdModelMap map[modelKey][]string
-var testData []pairs
+var correctMatches []pairs
+var notConfident []string
 
 type pairs struct {
 	postTitle     string
@@ -12,7 +13,7 @@ type pairs struct {
 
 func init() {
 	ssdModelMap = prepareProcessedData()
-	testData = []pairs{
+	correctMatches = []pairs{
 		{postTitle: "[SSD] Crucial P3 4TB PCIe Gen3 3D NAND NVMe M.2 SSD, up to 3500MB/s (334.99 ATL) [Amazon.ca]", brandAndModel: "Crucial P3"},
 		{postTitle: "[SSD] Crucial P3 Plus (blah) [Amazon.ca]", brandAndModel: "Crucial P3 Plus"},
 		{postTitle: "[SSD] Western Digital 4TB WD Blue 3D NAND ($309.99) [Amazon/Newegg]", brandAndModel: "WD Blue 3D"},
@@ -33,10 +34,14 @@ func init() {
 		{postTitle: "[SSD] TEAMGROUP MP33 2TB SLC Cache 3D NAND TLC NVMe ($139.99) (ATL) [Amazon.ca]", brandAndModel: "Team MP33"},
 		// {postTitle: "[SSD] Patriot 210 2TB ($110) [Amazon]", brandAndModel: "Patriot P210"}, // Not sure if I should keep since it doesn't contain the model
 	}
+
+	notConfident = []string{
+		"[NVMe] Western Digital 500GB WD Red SN700 NVMe Internal Solid State Drive SSD for NAS Devices - Gen3 PCIe, M.2 2280, Up to 3,430 MB/s - WDS500G1R0C (Amazon ATL) $99.37",
+	}
 }
 
-func TestBlah(t *testing.T) {
-	for _, pair := range testData {
+func TestCorrectMatches(t *testing.T) {
+	for _, pair := range correctMatches {
 		score, matches := getMatching(pair.postTitle, ssdModelMap)
 		if len(matches) != 1 {
 			t.Errorf("Matches was not exactly 1 (was %d): %s,%s\n", len(matches), pair.brandAndModel, pair.postTitle)
@@ -49,6 +54,15 @@ func TestBlah(t *testing.T) {
 		resultingTitle := matches[0][0] + " " + matches[0][1]
 		if pair.brandAndModel != resultingTitle {
 			t.Errorf("[%s] Did not match expected title [%s]", resultingTitle, pair.brandAndModel)
+		}
+	}
+}
+
+func TestNotConfident(t *testing.T) {
+	for _, title := range notConfident {
+		_, matches := getMatching(title, ssdModelMap)
+		if len(matches) == 1 {
+			t.Errorf("Matched on not exactly one for [%s]\n",title)
 		}
 	}
 }

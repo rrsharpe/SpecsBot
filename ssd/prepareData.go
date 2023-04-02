@@ -35,7 +35,14 @@ var bannedWords mapset.Set = mapset.NewSet( // SPECIFICALLY for titles/models
 	"GAMING", // Gaming is used a lot but CFD decided it would be a good brand name to include Gaming...
 	"SSD",    // Everything here is an SSD. Only screws up a Gigabyte one since the model is just SSD...
 	"PRO",    // Pro in titles causes problems
+	"3D", // Many things have 3D in the model name
 )
+
+// Common brand aliases
+var brandAliases = map[string][]string{
+	"TEAM": {"TEAMGROUP"},
+	"ADATA": {"XPG"},
+}
 
 func argMatchesDelimiters(r rune) bool {
 	return r == ' ' || r == '(' || r == ')' || r == '/' || r == '_'
@@ -56,6 +63,11 @@ func prepareProcessedData() map[modelKey][]string {
 
 		brandSet := mapset.NewSet()
 		for _, token := range strings.FieldsFunc(brand, argMatchesDelimiters) {
+			if aliases, isPresent := brandAliases[token]; isPresent {
+				for _, alias := range aliases {
+					brandSet.Add(alias)
+				}
+			}
 			brandSet.Add(token)
 		}
 		modelSet := mapset.NewSet()

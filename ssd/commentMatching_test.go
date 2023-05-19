@@ -33,6 +33,7 @@ func init() {
 		{postTitle: "[NVMe SSD] Lexar NM610 2TB M.2 2280 ($160 - $30 = $130) (F/S) [Canada Computers]", brandAndModel: "Lexar NM610"},
 		{postTitle: "[SSD] TEAMGROUP MP33 2TB SLC Cache 3D NAND TLC NVMe ($139.99) (ATL) [Amazon.ca]", brandAndModel: "Team MP33"},
 		{postTitle: "[SSD] TEAMGROUP AX2 2TB 3D NAND TLC 2.5 Inch SATA III SSD ($113) (Amazon)", brandAndModel: "Team AX2"},
+		{postTitle: "[NVMe] Corsair MP600 CORE XT 4TB PCIe Gen4 x4 NVMe M.2 SSD QLC M.2 2280 Up to 5,000MB/sec ($355.64) [Amazon.ca]", brandAndModel: "Corsair MP600 Core XT"},
 		// {postTitle: "[SSD] Patriot 210 2TB ($110) [Amazon]", brandAndModel: "Patriot P210"}, // Not sure if I should keep since it doesn't contain the model
 	}
 

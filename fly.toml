@@ -1,15 +1,15 @@
-# fly.toml file generated for go-ssd-bot on 2023-01-30T20:00:27-05:00
+# fly.toml app configuration file generated for go-ssd-bot on 2023-06-18T12:05:44-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = "go-ssd-bot"
+primary_region = "yyz"
 kill_signal = "SIGINT"
-kill_timeout = 5
-processes = []
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
 
 [build]
   image = "registry.gitlab.com/rrsharpe/go-ssd-bot-registry/go-ssd-bot"
-
-[env]
-
-[experimental]
-  allowed_public_ports = []
-  auto_rollback = true

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"time"
 
 	"github.com/turnage/graw"
 	"github.com/turnage/graw/botfaces"
@@ -25,15 +26,18 @@ func main() {
 
 	cfg := graw.Config{Subreddits: subreddits}
 	handler := ssd.InitSSDPostHandler(bot)
+	for {
+		// Fetch last few posts if something was missed during a restart
+		readPrevious(bot, subreddits, handler)
 
-	// Fetch last few posts if something was missed during a restart
-	readPrevious(bot, subreddits, handler)
-
-	// Listen for new posts
-	if _, wait, err := graw.Run(handler, bot, cfg); err != nil {
-		fmt.Println("Failed to start graw run: ", err)
-	} else {
-		fmt.Println("graw run failed: ", wait())
+		// Listen for new posts
+		if _, wait, err := graw.Run(handler, bot, cfg); err != nil {
+			fmt.Println("Failed to start graw run: ", err)
+		} else {
+			fmt.Println("graw run failed: ", wait())
+		}
+		fmt.Println("Sleeping for 5 minutes...")
+		time.Sleep(5 * time.Minute)
 	}
 }
 

@@ -24,6 +24,7 @@ To run the application you need to set the following environment variables
  * BOT_SECRET - The [Reddit OAuth2](https://github.com/reddit-archive/reddit/wiki/OAuth2) `secret`
  * BOT_USERNAME - The username of your bot
  * BOT_PASSWORD - The password of the bot account
+ * SUBREDDIT - The subreddit you want to scan (eg `bapcsalescanada`)
 
  ---
 

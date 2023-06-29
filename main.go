@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"time"
+	"os"
 
 	"github.com/turnage/graw"
 	"github.com/turnage/graw/botfaces"
@@ -21,14 +22,16 @@ func main() {
 		return
 	}
 
-	subreddits := []string{"SpecsBotTesting", "bapcsalescanada"}
-	// subreddits := []string{"SpecsBotTesting"}
+	subreddit, subredditDefined := os.LookupEnv("SUBREDDIT")
+	if (!subredditDefined) {
+		panic("Subreddit not configured")
+	}
 
-	cfg := graw.Config{Subreddits: subreddits}
+	cfg := graw.Config{Subreddits: []string{subreddit}}
 	handler := ssd.InitSSDPostHandler(bot)
 	for {
 		// Fetch last few posts if something was missed during a restart
-		readPrevious(bot, subreddits, handler)
+		readPrevious(bot, subreddit, handler)
 
 		// Listen for new posts
 		if _, wait, err := graw.Run(handler, bot, cfg); err != nil {
@@ -42,16 +45,14 @@ func main() {
 }
 
 // Reads the previous 10 posts and applies the PostHandler method
-func readPrevious(bot reddit.Bot, subreddits []string, handler botfaces.PostHandler) {
-	for _, subreddit := range subreddits {
-		r_sub := fmt.Sprintf("/r/%s", subreddit)
-		harvest, err := bot.Listing(r_sub, "")
-		if err != nil {
-			fmt.Println("Failed to fetch", r_sub, err)
-			return
-		}
-		for _, post := range harvest.Posts[:int(math.Min(10, float64(len(harvest.Posts))))] {
-			handler.Post(post)
-		}
+func readPrevious(bot reddit.Bot, subreddit string, handler botfaces.PostHandler) {
+	r_sub := fmt.Sprintf("/r/%s", subreddit)
+	harvest, err := bot.Listing(r_sub, "")
+	if err != nil {
+		fmt.Println("Failed to fetch", r_sub, err)
+		return
+	}
+	for _, post := range harvest.Posts[:int(math.Min(10, float64(len(harvest.Posts))))] {
+		handler.Post(post)
 	}
 }

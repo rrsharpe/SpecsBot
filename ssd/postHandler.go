@@ -73,18 +73,18 @@ func getMatching(description string, modelMap map[modelKey][]string) (int, [][]s
 	var matchingRows [][]string = [][]string{}
 
 	for keySet, value := range modelMap {
-		numBrandMatching := len(keySet.brand.Intersect(descriptionSet).ToSlice()) * 10000 // brand and model takes precedence
+		numBrandMatching := len(keySet.brand.Intersect(descriptionSet).ToSlice()) * 10000 // brand > model > product pages
 		numModelMatching := len(keySet.model.Intersect(descriptionSet).ToSlice()) * 1000
 		numProductPagesMatching := len(keySet.productPages.Intersect(descriptionSet).ToSlice()) * 100
 		numOthersMatching := len(keySet.others.Intersect(descriptionSet).ToSlice()) * 10  // Then others
 		modelLenReduction := 10 - len(strings.FieldsFunc(value[1], argMatchesDelimiters)) // A model [A B] and [A] might tie if given just A. More model matches still wins
 		numMatching := numBrandMatching + numModelMatching + numOthersMatching + numProductPagesMatching + modelLenReduction
 		if numMatching > maxMatching {
-			// fmt.Println("A", keySet.model, numBrandMatching, numModelMatching, numOthersMatching, numProductPagesMatching, modelLenReduction)
+			fmt.Println("A", keySet.model, numBrandMatching, numModelMatching, numOthersMatching, numProductPagesMatching, modelLenReduction)
 			matchingRows = [][]string{value}
 			maxMatching = numMatching
 		} else if numMatching == maxMatching {
-			// fmt.Println("B", keySet.model, numBrandMatching, numModelMatching, numOthersMatching, numProductPagesMatching, modelLenReduction)
+			fmt.Println("B", keySet.model, numBrandMatching, numModelMatching, numOthersMatching, numProductPagesMatching, modelLenReduction)
 			matchingRows = append(matchingRows, value)
 		}
 	}

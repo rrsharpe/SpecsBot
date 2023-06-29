@@ -80,11 +80,11 @@ func getMatching(description string, modelMap map[modelKey][]string) (int, [][]s
 		modelLenReduction := 10 - len(strings.FieldsFunc(value[1], argMatchesDelimiters)) // A model [A B] and [A] might tie if given just A. More model matches still wins
 		numMatching := numBrandMatching + numModelMatching + numOthersMatching + numProductPagesMatching + modelLenReduction
 		if numMatching > maxMatching {
-			fmt.Println("A", keySet.model, numBrandMatching, numModelMatching, numOthersMatching, numProductPagesMatching, modelLenReduction)
+			// fmt.Println("A", keySet.model, numBrandMatching, numModelMatching, numOthersMatching, numProductPagesMatching, modelLenReduction)
 			matchingRows = [][]string{value}
 			maxMatching = numMatching
 		} else if numMatching == maxMatching {
-			fmt.Println("B", keySet.model, numBrandMatching, numModelMatching, numOthersMatching, numProductPagesMatching, modelLenReduction)
+			// fmt.Println("B", keySet.model, numBrandMatching, numModelMatching, numOthersMatching, numProductPagesMatching, modelLenReduction)
 			matchingRows = append(matchingRows, value)
 		}
 	}

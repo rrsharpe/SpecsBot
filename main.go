@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"math"
-	"time"
 	"os"
+	"time"
 
 	"github.com/turnage/graw"
 	"github.com/turnage/graw/botfaces"
 	"github.com/turnage/graw/reddit"
 
+	"github.com/rrsharpe/Go-SSD-Bot/dispatcher"
 	"github.com/rrsharpe/Go-SSD-Bot/ssd"
 )
 
@@ -23,18 +24,20 @@ func main() {
 	}
 
 	subreddit, subredditDefined := os.LookupEnv("SUBREDDIT")
-	if (!subredditDefined) {
+	if !subredditDefined {
 		panic("Subreddit not configured")
 	}
 
 	cfg := graw.Config{Subreddits: []string{subreddit}}
-	handler := ssd.InitSSDPostHandler(bot)
+	ssdHandler := ssd.InitSSDPostHandler(bot)
+
+	combinedHandler := dispatcher.GetUnionType(ssdHandler)
 	for {
 		// Fetch last few posts if something was missed during a restart
-		readPrevious(bot, subreddit, handler)
+		readPrevious(bot, subreddit, combinedHandler)
 
 		// Listen for new posts
-		if _, wait, err := graw.Run(handler, bot, cfg); err != nil {
+		if _, wait, err := graw.Run(combinedHandler, bot, cfg); err != nil {
 			fmt.Println("Failed to start graw run: ", err)
 		} else {
 			fmt.Println("graw run failed: ", wait())

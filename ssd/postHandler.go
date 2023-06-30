@@ -54,8 +54,6 @@ func conditionallyComment(description string, bot reddit.Bot, p reddit.Post, mod
 			AltNames:      filteredAltNames,
 		})
 		fmt.Println("\t* Matched to", title)
-		// fmt.Println(comment)
-		// _ = comment;
 		bot.Reply(p.Name, comment)
 	} else {
 		fmt.Println("Not confident enough to post!")

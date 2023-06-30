@@ -30,7 +30,7 @@ To run the application you need to set the following environment variables
 
 
 ## Project Structure
-This project is separated into packages. The main package simply fetches and calls the various post handlers from each child module. Whenever a post from a followed subreddit is detected, each module's post handler will be called. It is up to each post handler to only respond to their type of post.
+This project is separated into packages. The main package simply fetches and calls the various post handlers from each child module. Whenever a post from the followed subreddit is detected, each module's post handler will be called. It is up to each post handler to only respond to their type of post.
 
 ---
 

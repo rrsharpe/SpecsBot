@@ -11,6 +11,7 @@ RUN go mod download
 
 COPY *.go ./
 COPY ssd ./ssd
+COPY dispatcher ./dispatcher
 
 RUN go build -o . ./...
 

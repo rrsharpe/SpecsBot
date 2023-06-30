@@ -27,7 +27,7 @@ type GrawUnionType struct {
 }
 
 
-// Aggregates several post handlers
+// Aggregates several handlers
 func GetUnionType(ifaces ...interface{}) (* GrawUnionType) {
 	ret := GrawUnionType{
 		loaderHandlers: [](func()error){},

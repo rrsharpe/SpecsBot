@@ -29,9 +29,10 @@ func readCsvFile() [][]string {
 var bannedWords mapset.Set = mapset.NewSet( // SPECIFICALLY for titles/models
 	"",       // Some product page cells are empty
 	"BLACK",  // WD Black models don't always have Black listed in the table
-	"RED",  // WD Black models don't always have Black listed in the table
-	"NVME",  // WD Black models don't always have Black listed in the table
-	"PCIE",  // WD Black models don't always have Black listed in the table
+	"RED",  // WD Black models don't always have Red listed in the table
+	"NVME",  // Causes false positives across many brands
+	"PCIE",  // Causes false positives across many brands
+	"4.0", // Causes false positives across many brands
 	"GAMING", // Gaming is used a lot but CFD decided it would be a good brand name to include Gaming...
 	"SSD",    // Everything here is an SSD. Only screws up a Gigabyte one since the model is just SSD...
 	"PRO",    // Pro in titles causes problems

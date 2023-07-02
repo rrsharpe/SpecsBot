@@ -36,6 +36,7 @@ func init() {
 		{postTitle: "[NVMe] Corsair MP600 CORE XT 4TB PCIe Gen4 x4 NVMe M.2 SSD QLC M.2 2280 Up to 5,000MB/sec ($355.64) [Amazon.ca]", brandAndModel: "Corsair MP600 Core XT"},
 		{postTitle: "[ssd] corsair mp600 1tb nvme HMB TLC 4800 MB/s/ 3900 MB/s ($100-25=$75+fs) [amazon] ", brandAndModel: "Corsair MP600 GS"},
 		{postTitle: "[SSD] MSI SPATIUM M371 2TB NVMe M.2 Read:2350MB/s Write:1900MB/s Solid State Drive(SM371N2TB)($129.99 - $20 = $109.99) [Canadacomputers] ", brandAndModel: "MSI M371"},
+		{postTitle: "[NVME] Team Group MP44L M.2 2280 2TB PCIe 4.0 x4 TLC ($140-20-$10 coupon=$110) [Newegg.ca] ATL", brandAndModel: "Team MP44L"},
 	}
 }
 

@@ -27,22 +27,22 @@ func readCsvFile() [][]string {
 }
 
 var bannedWords mapset.Set = mapset.NewSet( // SPECIFICALLY for titles/models
-	"",       // Some product page cells are empty
-	"BLACK",  // WD Black models don't always have Black listed in the table
-	"RED",  // WD Black models don't always have Red listed in the table
-	"NVME",  // Causes false positives across many brands
-	"PCIE",  // Causes false positives across many brands
-	"4.0", // Causes false positives across many brands
-	"GAMING", // Gaming is used a lot but CFD decided it would be a good brand name to include Gaming...
-	"SSD",    // Everything here is an SSD. Only screws up a Gigabyte one since the model is just SSD...
-	"PRO",    // Pro in titles causes problems
-	"3D", // Many things have 3D in the model name
+	"",        // Some product page cells are empty
+	"BLACK",   // WD Black models don't always have Black listed in the table
+	"RED",     // WD Black models don't always have Red listed in the table
+	"NVME",    // Causes false positives across many brands
+	"PCIE",    // Causes false positives across many brands
+	"4.0",     // Causes false positives across many brands
+	"GAMING",  // Gaming is used a lot but CFD decided it would be a good brand name to include Gaming...
+	"SSD",     // Everything here is an SSD. Only screws up a Gigabyte one since the model is just SSD...
+	"PRO",     // Pro in titles causes problems
+	"3D",      // Many things have 3D in the model name
 	"SPATIUM", // This is inconsistently included in the spreadsheet for MSI
 )
 
 // Common brand aliases
 var brandAliases = map[string][]string{
-	"TEAM": {"TEAMGROUP"},
+	"TEAM":  {"TEAMGROUP"},
 	"ADATA": {"XPG"},
 }
 
@@ -61,10 +61,10 @@ func prepareProcessedData() map[modelKey][]string {
 		brand := strings.ToUpper(row[0])
 		model := strings.ToUpper(row[1])
 		productPages := strings.ToUpper(strings.Join([]string{row[15], row[16]}, " ")) // 15,16 are product pages
-		validOthers := append([]string{},row[0:4]...)   // 4 is capacity
-		validOthers = append(validOthers,row[5])        // 6:configuration, 7:dram, 8:hmb
-		validOthers = append(validOthers,row[9:13]...)  // 13: categories
-		validOthers = append(validOthers,row[14:17]...)
+		validOthers := append([]string{}, row[0:4]...)                                 // 4 is capacity
+		validOthers = append(validOthers, row[5])                                      // 6:configuration, 7:dram, 8:hmb
+		validOthers = append(validOthers, row[9:13]...)                                // 13: categories
+		validOthers = append(validOthers, row[14:17]...)
 		others := strings.ToUpper(strings.Join(validOthers, " "))
 
 		brandSet := mapset.NewSet()

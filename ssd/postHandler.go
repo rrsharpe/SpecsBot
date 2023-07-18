@@ -93,6 +93,9 @@ func getMatching(description string, modelMap map[modelKey][]string) (int, [][]s
 func (b *SSDPostHandler) Post(p *reddit.Post) error {
 	tagCloseIndex := strings.Index(p.Title, "]")
 	priceStart := strings.Index(p.Title, "(") // Technically may be earlier than the price
+	if (priceStart == -1 ) {
+		priceStart = strings.Index(p.Title, "$")
+	}
 	if tagCloseIndex <= 1 || priceStart < tagCloseIndex {
 		return nil
 	}
